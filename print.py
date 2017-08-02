@@ -1,2 +1,2 @@
 a=69
-print (a)
+print a+"//n"
