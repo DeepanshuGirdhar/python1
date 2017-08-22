@@ -22,8 +22,12 @@ elif (existing.upper() == "N"):
     # chek wether spy has input something or not
     if len(spy['name']) > 0:
         spy['salutation'] = raw_input("What should we all you ? : ")
-        spy['age'] = int(raw_input("Enter your age. ?")) # converting users input to integer (typecasting)
-
+        while True:
+            try:
+               spy['age'] = int(raw_input("Enter your age. ?")) # converting users input to integer (typecasting)
+               break
+            except Exception:
+                print "Invalid age. Try again"
         # concatination of salutation and name of spy.
         spy['name'] = spy['salutation'] + " " + spy['name']
 
