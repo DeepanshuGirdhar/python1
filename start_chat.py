@@ -20,7 +20,7 @@ def start_chat(name, age, rating, status):
                           "Name : " + name + "\n" \
                           "Age: " + str(age) + "\n" \
                           "Rating: " + str(rating) + "\n" \
-                          "Proud to have you onboard"
+                          "Proud to have you on board"
         print welcome_message
 
         # displaying menu for user.

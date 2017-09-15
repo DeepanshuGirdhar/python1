@@ -2,5 +2,5 @@
 
 
 
-    # list= [  dictionary = {  'key':'value','nested dictionary(as key)':'value of nested dictionary' }  ]
-    # example according to project  friends=[new friend={'key':'value','nested dictionary':'new_chat'}]
+    # list= [  dictionary = {  'key':'value','new_list(as key)':'[]' }  ]
+    # example according to project  friends=[new friend={'key':'value','chat':'[]'}]
