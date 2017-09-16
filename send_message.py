@@ -1,28 +1,52 @@
 from select_friend import select_friend
 from steganography.steganography import Steganography
-from globals import friends
+from globals import friends,Chat
+from termcolor import colored
 from datetime import datetime
-
+import re
+import colorama
+colorama.init()
 def send_message():
-    # choose a friend from the list.
+    #function logic
     friend_choice = select_friend()
+    #checking If Friend's List Is not Empty
+    if friend_choice!=-1:
+        pattern='^[A-Za-z][0-9A-Za-z\s]*\.jpg$'#Regex for correct name pattern for image
+        patternsave='^SOS|SAVE ME|IN DANGER|HELP|sos|save me|in danger|help$'
+        a=True#Temporary Variable
 
-    # prepare the message
-    original_image = raw_input("Provide the name of the image to hide the message : ")
-    output_image = raw_input("Provide the name of the output image  : ")
-    text = raw_input("Enter your message here : ")
-    # Encrypt the message
-    Steganography.encode(original_image, output_image, text)
-
-    # Successful message
-    print "Your message encrypted successfully."
-
-    # save the messages
-    new_chat = {
-        'message': text,
-        'time': datetime.now(),
-        'sent_by_me': True
-    }
-
-    friends[friend_choice]['chats'].append(new_chat)
-    print "your secret message is ready."
+        while a:
+            original_image = raw_input("Provide the name of the image to hide the message: ")
+            if(re.match(pattern,original_image)!=None):
+                a=False
+            else:
+                print colored("Enter Again!!!!",'red')
+        a=True
+        while a:
+            output_image = raw_input("Provide the name of the output image : ")
+            if (re.match(pattern, output_image) != None):
+                a = False
+            else:
+                print colored("Enter Again!!!!",'red')
+        text = raw_input("Enter your message here: ")
+        if(len(text)>100):
+            #remove friend he/she types more 100 words
+            print colored("Large Message Input!!!!",'red')
+            print colored("You are no more a Spy!!!!",'red')
+            friends.remove(friends[friend_choice])
+        else:
+            #Handling Exception If Image Does Not Exist
+            try:
+                # Encrypt the message
+                Steganography.encode(original_image,output_image,text)
+                chatobject=Chat(output_image,datetime.now())
+                friends[friend_choice].chat.append(chatobject)      #putting the chat according to selected friend object list
+                #Successful message
+                print colored("Your message encrpyted successfully",'green')
+                # Handling Situation For SOS|Danger
+                if (re.match(patternsave, text.upper()) != None):
+                    print colored("Keep Calm!!!!I'll be there soon!",'green')
+            except IOError:
+                print colored("Image %s Does Not Exist!!!!" %(original_image),'red')
+    else:
+        print colored("Empty Friend's List!!!!",'red')
